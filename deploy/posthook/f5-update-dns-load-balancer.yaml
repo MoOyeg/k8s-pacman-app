@@ -10,9 +10,9 @@ spec:
   tower_auth_secret: toweraccess
   job_template_name: f5-update-dns-load-balancer
   extra_vars:
-    API_DOMAIN: demo.red-chesterfield.com
+    API_DOMAIN: moyegunl.northeast.aws.redhat-demo.com
     # The AWS Route53 NS Record must exist with NameServers:
     # ns1.f5cloudservices.com
     # ns2.f5cloudservices.com
     GSLB_ZONE: www-apps
-    BASE_DOMAIN: oscar.demo.red-chesterfield.com
+    BASE_DOMAIN: cluster1.moyegunl.northeast.aws.redhat-demo.com
