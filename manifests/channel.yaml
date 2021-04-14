@@ -1,0 +1,8 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: mgithubcom-mooyeg-k8s-pacman-app
+  namespace: pacman-app
+spec:
+  pathname: https://github.com/MoOyeg/k8s-pacman-app.git
+  type: Git
