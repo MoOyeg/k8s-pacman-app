@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - channel.yaml
+  - pacman-application.yaml
+  - placementrule-eks.yaml
+  - placementrule-openshift.yaml
+  - placementrule-main.yaml
+  - subscription-eks.yaml
+  - subscription-main.yaml
+  - subscription-openshift.yaml
