@@ -14,7 +14,7 @@ spec:
     # The AWS Route53 NS Record must exist with NameServers:
     # ns1.f5cloudservices.com
     # ns2.f5cloudservices.com
-    GSLB_ZONE: gslb
+    GSLB_ZONE: pacman-demo
     BASE_DOMAIN: oyegunle.com
     BASE_AWS_DOMAIN: aws.oyegunle.com
     BASE_AZ_DOMAIN: azure.oyegunle.com
