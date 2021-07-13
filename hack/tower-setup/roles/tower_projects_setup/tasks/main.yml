@@ -31,6 +31,42 @@
       F5AAS_USER: "{{ f5aas_username }}"
       F5AAS_PASS: "{{ f5aas_password }}"
 
+
+- name: "Add credential type:AWS"
+  awx.awx.tower_credential_type:
+    name: "AWS Credentials"
+    kind: cloud
+    state: present
+    input:
+      fields:
+        - id: AWS_ACCESS_KEY_ID
+          type: string
+          label: AWS-ACCESS-KEY-ID
+          secret: true
+        - id: AWS_SECRET_ACCESS_KEY
+          type: string
+          label: aws_secret_access_key
+          secret: true
+      required:
+        - AWS_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY
+    injectors:
+      extra_vars:
+        F5AAS_USER: '{%raw%}{{ AWS_ACCESS_KEY_ID }}{%endraw%}'
+        F5AAS_PASS: '{%raw%}{{ AWS_SECRET_ACCESS_KEY }}{%endraw%}'
+  when: AWS_ACCESS_KEY_ID is defined
+
+- name:  "Add credential type:AWS"
+  awx.awx.tower_credential:
+    name: AWS Credentials
+    organization: Default
+    credential_type: "AWS_SECRET"
+    state: present
+    inputs:
+      AWS_ACCESS_KEY_ID: "{{ aws_access_key_id }}"
+      AWS_SECRET_ACCESS_KEY: "{{ aws_secret_access_key }}"
+  when: AWS_ACCESS_KEY_ID is defined
+
 - name: "Add credential type: Service Now"
   awx.awx.tower_credential_type:
     name: "ServiceNow"
@@ -95,7 +131,7 @@
     organization: "Default"
     state: present
     scm_type: git
-    scm_url: https://github.com/mdelder/f5-bd-gslb-tool.git
+    scm_url: https://github.com/MoOyeg/f5-bd-gslb-tool
     scm_branch: modified-for-tower
 
 
@@ -108,3 +144,24 @@
     ask_variables_on_launch: true
     credentials:
     - "F5 Cloud DNS Load Balancer Credential"
+
+- name: "Add Tower Project: \"AWS_Project\""
+  awx.awx.tower_project:
+    name: "aws_project"
+    description: "AWS Project"
+    organization: "Default"
+    state: present
+    scm_type: git
+    scm_url: https://github.com/MoOyeg/f5-bd-gslb-tool
+    scm_branch: modified-for-tower
+
+
+- name: "Add Job Template: \"AWS_Project\""
+  awx.awx.tower_job_template:
+    name: "aws_project"
+    inventory: "Demo Inventory"
+    project: "aws_project"
+    playbook: "src/aws_commit.yaml"
+    ask_variables_on_launch: true
+    credentials:
+    - "AWS Credentials"
