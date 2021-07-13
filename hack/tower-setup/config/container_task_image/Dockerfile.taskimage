@@ -1,14 +1,20 @@
-FROM registry.redhat.io/ansible-tower-37/ansible-tower-rhel7:3.7.2
+FROM registry.redhat.io/ansible-tower-38/ansible-tower-rhel7:3.8.3
 
 # Rollback to root to allow the pip3 install to succeed
 USER 0
 
-# RUN python3 -m ensurepip && pip3 install pysnow certifi kubernetes openshift jq dnspython
-
-ENV PIP_CMD=/var/lib/awx/venv/ansible/bin/pip2
+#RUN python3 -m ensurepip && pip3 install pysnow certifi kubernetes openshift jq dnspython dig 
+#RUN rm -rf /var/lib/awx/venv/ansible && python3 -m venv /var/lib/awx/venv/ansible
+ENV PIP_CMD=/var/lib/awx/venv/ansible/bin/pip2.7
+#RUN yum install -y bind-utils
+#COPY requirements.txt /tmp/requirements.txt
 RUN $PIP_CMD install setuptools --upgrade && \
-    $PIP_CMD install pysnow certifi dnspython dig jq kubernetes openshift
+    $PIP_CMD install pysnow certifi dnspython dig && ln -s /var/lib/awx/venv/ansible/bin/dig /usr/bin/dig
+    #$PIP_CMD install pysnow certifi dnspython dig jq kubernetes openshift
 
 RUN curl -L -o /usr/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x /usr/bin/jq
 
+#Install the AWS cli
+RUN yum install -y unzip && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && ./aws/install
 USER 1000
