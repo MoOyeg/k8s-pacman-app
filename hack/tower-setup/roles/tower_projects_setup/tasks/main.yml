@@ -37,7 +37,7 @@
     name: "AWS Credentials"
     kind: cloud
     state: present
-    input:
+    inputs:
       fields:
         - id: AWS_ACCESS_KEY_ID
           type: string
@@ -52,20 +52,20 @@
         - AWS_SECRET_ACCESS_KEY
     injectors:
       extra_vars:
-        F5AAS_USER: '{%raw%}{{ AWS_ACCESS_KEY_ID }}{%endraw%}'
-        F5AAS_PASS: '{%raw%}{{ AWS_SECRET_ACCESS_KEY }}{%endraw%}'
-  when: AWS_ACCESS_KEY_ID is defined
+        AWS_ACCESS_KEY_ID: '{%raw%}{{ AWS_ACCESS_KEY_ID }}{%endraw%}'
+        AWS_SECRET_ACCESS_KEY: '{%raw%}{{ AWS_SECRET_ACCESS_KEY }}{%endraw%}'
+  when: aws_access_key_id is defined
 
 - name:  "Add credential type:AWS"
   awx.awx.tower_credential:
     name: AWS Credentials
     organization: Default
-    credential_type: "AWS_SECRET"
+    credential_type: "AWS Credentials"
     state: present
     inputs:
       AWS_ACCESS_KEY_ID: "{{ aws_access_key_id }}"
       AWS_SECRET_ACCESS_KEY: "{{ aws_secret_access_key }}"
-  when: AWS_ACCESS_KEY_ID is defined
+  when: aws_access_key_id is defined
 
 - name: "Add credential type: Service Now"
   awx.awx.tower_credential_type:
