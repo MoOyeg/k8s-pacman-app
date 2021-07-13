@@ -3,3 +3,4 @@ bases:
 resources:
   - pacman-f5-route.yaml
   - pacman-route.yaml
+  - pacman-service.yaml

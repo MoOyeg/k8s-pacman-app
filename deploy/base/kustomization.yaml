@@ -5,4 +5,4 @@ resources:
   - mongo-pvc.yaml
   - mongo-service.yaml
   - pacman-deployment.yaml
-  - pacman-service.yaml
+#  - pacman-service.yaml
