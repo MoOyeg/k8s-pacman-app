@@ -24,6 +24,10 @@ RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/s
     mv ./kubectl /usr/bin/kubectl
 
 #Allow PFOlder Permissions
-RUN chgrp -R 0 /var/lib 
+RUN chgrp -R 0 /var/lib && \
+    chmod -R ugo+rw /var/lib
 
 USER 1000
+
+
+dig +noall +short -t A k8s-pacmanap-pacman-826555e08c-321fac9392c47888.elb.us-east-1.amazonaws.com
