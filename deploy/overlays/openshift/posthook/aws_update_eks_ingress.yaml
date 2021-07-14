@@ -2,13 +2,10 @@
 apiVersion: tower.ansible.com/v1alpha1
 kind: AnsibleJob
 metadata:
-  name: aws_update_eks_ingress.yaml
+  name: aws_update_eks_ingress
   namespace: pacman-app
   labels:
     app.kubernetes.io/name: pacman
 spec:
   tower_auth_secret: toweraccess
   job_template_name: aws_project
-
-
-
