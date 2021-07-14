@@ -2,7 +2,7 @@
 apiVersion: tower.ansible.com/v1alpha1
 kind: AnsibleJob
 metadata:
-  name: aws_update_eks_ingress
+  name: aws-update-eks-ingress
   namespace: pacman-app
   labels:
     app.kubernetes.io/name: pacman
